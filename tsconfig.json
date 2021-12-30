@@ -5,13 +5,13 @@
         "sourceMap": true,
         "target": "es2015",
         "module": "ESNext",
-    
+
         // Rules for your code
         "strict": true,
         "noImplicitAny": true,
         "noImplicitReturns": true,
-        "noUnusedParameters": true,
-        "noUnusedLocals": true,
+        "noUnusedParameters": false, //true
+        "noUnusedLocals": false, //true
         "noFallthroughCasesInSwitch": true,
         "noImplicitOverride": true,
 
@@ -20,11 +20,8 @@
         "esModuleInterop": true,
         "resolveJsonModule": true,
         "allowSyntheticDefaultImports": true,
-        "experimentalDecorators": true,
-
+        "experimentalDecorators": true
     },
     // Folder for your code
-    "include": [
-        "./src/**/*"
-    ]
+    "include": ["./src/**/*"]
 }

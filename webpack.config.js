@@ -1,18 +1,18 @@
-const webpack = require('webpack');
-const path = require('path');
-const CopyPlugin = require('copy-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
+const webpack = require("webpack");
+const path = require("path");
+const CopyPlugin = require("copy-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = (env, argv) => {
-    return ({
-        stats: 'minimal', // Keep console output easy to read.
-        entry: './src/index.ts', // Your program entry point
+    return {
+        stats: "minimal", // Keep console output easy to read.
+        entry: "./src/index.ts", // Your program entry point
 
         // Your build destination
         output: {
-            path: path.resolve(__dirname, 'dist'),
-            filename: 'bundle.js'
+            path: path.resolve(__dirname, "dist"),
+            filename: "bundle.js",
         },
 
         // Config for your testing server
@@ -27,58 +27,56 @@ module.exports = (env, argv) => {
                 },
                 progress: true,
             },
-            port: 1234, host: '0.0.0.0'
+            port: 8000,
+            host: "localhost",
         },
 
         // Web games are bigger than pages, disable the warnings that our game is too big.
         performance: { hints: false },
 
         // Enable sourcemaps while debugging
-        devtool: argv.mode === 'development' ? 'eval-source-map' : undefined,
+        devtool: argv.mode === "development" ? "eval-source-map" : undefined,
 
         // Minify the code when making a final build
         optimization: {
-            minimize: argv.mode === 'production',
-            minimizer: [new TerserPlugin({
-                terserOptions: {
-                    ecma: 6,
-                    compress: { drop_console: true },
-                    output: { comments: false, beautify: false },
-                },
-            })],
+            minimize: argv.mode === "production",
+            minimizer: [
+                new TerserPlugin({
+                    terserOptions: {
+                        ecma: 6,
+                        compress: { drop_console: true },
+                        output: { comments: false, beautify: false },
+                    },
+                }),
+            ],
         },
-
 
         // Explain webpack how to do Typescript
         module: {
             rules: [
                 {
                     test: /\.ts(x)?$/,
-                    loader: 'ts-loader',
-                    exclude: /node_modules/
-                }
-            ]
+                    loader: "ts-loader",
+                    exclude: /node_modules/,
+                },
+            ],
         },
         resolve: {
-            extensions: [
-                '.tsx',
-                '.ts',
-                '.js'
-            ]
+            extensions: [".tsx", ".ts", ".js"],
         },
 
         plugins: [
             // Copy our static assets to the final build
             new CopyPlugin({
-                patterns: [{ from: 'static/' }],
+                patterns: [{ from: "src/assets/static/" }],
             }),
 
             // Make an index.html from the template
             new HtmlWebpackPlugin({
-                template: 'src/index.ejs',
+                template: "src/index.ejs",
                 hash: true,
-                minify: false
-            })
-        ]
-    });
-}
+                minify: false,
+            }),
+        ],
+    };
+};
