@@ -1,6 +1,6 @@
 import { Application } from "@pixi/app";
 import { IScene } from "../utils";
-// import FPSCounter from "../components/FPS";
+// import FPSMeter from "../components/FPSMeter";
 
 export class ScenesManager {
     private constructor() {}
